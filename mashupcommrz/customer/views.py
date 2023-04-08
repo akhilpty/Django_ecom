@@ -95,8 +95,7 @@ def addproducttocart(request):
     if request.is_ajax():
         product_id = int(request.POST['product'])
         user = request.user
-        cart_instance = CustomerCart(product_id = product_id,
-                                    customer = user)
+        cart_instance = CustomerCart(product_id = product_id,customer = user)
         cart_instance.save()
         return JsonResponse({'result':'success'})
 
@@ -140,7 +139,7 @@ def checkoutcustomer(request):
         usercart = CustomerCart.objects.filter(customer = request.user).select_related('product')
         totalprice = sum(item.product.price for item in usercart)
         receipt = str(uuid.uuid1())
-        client = razorpay.Client(auth=("rzp_test_HTWxZfreCSNvMO", "BHOtSKVgQO0zrvNufkyoguu3"))
+        client = razorpay.Client(auth=("rzp_test_sd85vwO4zyLLMF", "kM81cHcv1XtGVtledx5jd6i9"))
         DATA = {
             'amount':totalprice*100,
             'currency':'INR',
@@ -174,7 +173,7 @@ def checkoutcustomer(request):
                     'username' : request.user.first_name+' '+request.user.last_name,
                     'useremail' : request.user.email,
                     'phonenum' : phone,
-                    'rzpkey' : 'rzp_test_bAYqeZhjXN8pf0'
+                    'rzpkey' : 'rzp_test_sd85vwO4zyLLMF'
                     }
         return render(request,'customer/checkoutform.html',context)
     else:
